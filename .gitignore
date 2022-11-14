@@ -1,0 +1,5 @@
+.idea
+scratch
+venv
+**/__pycache__
+out.mp4
