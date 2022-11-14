@@ -10,7 +10,7 @@ processor = Processor()
 
 frames_processed = processor.process(input_path="data/15-seconds.mp4",
                                      output_path="out.mp4",
-                                     start=190,
-                                     end=191)
+                                     start=0,
+                                     end=5)
 
 pprint(frames_processed)

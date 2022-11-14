@@ -30,11 +30,13 @@ class Processor:
         output_video_stream = self.output_container.add_stream(template=input_video_stream)
         output_audio_stream = self.output_container.add_stream(template=input_audio_stream)
 
-        self.input_container.seek(start, any_frame=True, backward=True, stream=input_video_stream)
-
-        frame_number = start
         current_frame = None
+
         frame_length = float(1 / input_video_stream.average_rate)
+        frame_number = round(frame_length * start)
+        end_frame_number = round(frame_length * end)
+
+        self.input_container.seek(frame_number, any_frame=True, backward=True, stream=input_video_stream)
 
         for packet in self.input_container.demux(video=0, audio=0):
             frame_number += 1
@@ -55,7 +57,7 @@ class Processor:
 
             self.output_container.mux(packet)
 
-            if frame_number == end:
+            if frame_number >= end_frame_number:
                 break
 
         self.output_container.close()
